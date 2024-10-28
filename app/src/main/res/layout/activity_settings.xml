@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/padding">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_vertical_settings"
+        android:paddingBottom="@dimen/padding_vertical_settings"
+        >
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:backgroundTint="@color/white"
+            android:foreground="?attr/selectableItemBackground"
+            app:icon="@drawable/back"
+            app:iconGravity="textStart"
+            app:iconTint="@color/black"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/text_size_title"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:textColor="@color/black"
+            android:layout_gravity="start|center_vertical" />
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_vertical_settings"
+        android:paddingBottom="@dimen/padding_vertical_settings"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dark_theme"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textColor="@color/black"
+            android:layout_gravity="start|center_vertical" />
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_vertical_settings"
+        android:paddingBottom="@dimen/padding_vertical_settings"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textColor="@color/black"
+            android:layout_gravity="start|center_vertical" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:backgroundTint="@color/white"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            app:icon="@drawable/share"
+            app:iconGravity="textStart"
+            app:iconTint="@color/settings_icon" />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_vertical_settings"
+        android:paddingBottom="@dimen/padding_vertical_settings"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/support"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textColor="@color/black"
+            android:layout_gravity="start|center_vertical" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:backgroundTint="@color/white"
+            app:icon="@drawable/support"
+            app:iconGravity="textStart"
+            app:iconTint="@color/settings_icon"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_vertical_settings"
+        android:paddingBottom="@dimen/padding_vertical_settings"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_agreement"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textColor="@color/black"
+            android:layout_gravity="start|center_vertical" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:backgroundTint="@color/white"
+            app:icon="@drawable/arrow"
+            app:iconGravity="textStart"
+            app:iconTint="@color/settings_icon"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            />
+    </FrameLayout>
+</LinearLayout>
