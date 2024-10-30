@@ -13,10 +13,20 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        val findButton = findViewById<Button>(R.id.find_button)
+        val mediaButton = findViewById<Button>(R.id.media_button)
         val settingsButton = findViewById<Button>(R.id.settings_button)
 
+        findButton.setOnClickListener {
+            startActivity(Intent(this, FindActivity::class.java))
+        }
+
+        mediaButton.setOnClickListener {
+            startActivity(Intent(this, MediaActivity::class.java))
+        }
+
         settingsButton.setOnClickListener {
-            startActivity(Intent(this,SettingsActivity::class.java))
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 }
