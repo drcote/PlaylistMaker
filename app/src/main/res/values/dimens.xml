@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_primary">22sp</dimen>
+    <dimen name="text_size_title">26sp</dimen>
+    <dimen name="text_size_subtitle">16sp</dimen>
+    <dimen name="padding">16dp</dimen>
+    <dimen name="padding_vertical_settings">21dp</dimen>
+    <dimen name="main_menu_button_radius">16dp</dimen>
+    <dimen name="main_menu_padding_pic_text">8dp</dimen>
+</resources>
