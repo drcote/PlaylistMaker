@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_screen_background">#3772e7</color>
+    <color name="main_screen_text">#1A1B22</color>
+    <color name="settings_icon">#AEAFB4</color>
+    <color name="settings_screen_background">#FFFFFF</color>
+    <color name="switch_theme_title">#FF000000</color>
+    <color name="settings_screen_title">#FF000000</color>
+</resources>

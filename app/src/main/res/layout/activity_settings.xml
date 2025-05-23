@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/settings_screen_background"
     android:orientation="vertical"
     android:padding="@dimen/padding">
 
@@ -15,10 +15,10 @@
 
         <Button
             android:id="@+id/back_button"
+            style="@style/BackFromSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:backgroundTint="@color/white"
             android:elevation="0dp"
             android:foreground="?attr/selectableItemBackground"
             android:minWidth="0dp"
@@ -26,16 +26,17 @@
             android:padding="0dp"
             android:stateListAnimator="@null"
             app:icon="@drawable/back"
-            app:iconPadding="0dp"
-            app:iconTint="@color/black" />
+            app:iconPadding="0dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
+            android:fontFamily="@font/ys_display_medium"
             android:paddingLeft="24dp"
             android:text="@string/settings"
-            android:textColor="@color/black"
+            android:textColor="@color/settings_screen_title"
+            android:textFontWeight="500"
             android:textSize="@dimen/text_size_title" />
     </LinearLayout>
 
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/dark_theme"
-            android:textColor="@color/black"
+            android:textColor="@color/switch_theme_title"
             android:textSize="@dimen/text_size_subtitle" />
 
         <Switch
@@ -66,36 +67,18 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
-        android:paddingTop="@dimen/padding_vertical_settings"
-        android:paddingBottom="@dimen/padding_vertical_settings"
+        style="@style/SettingsTextView"
         android:text="@string/share"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_subtitle"
         app:drawableEndCompat="@drawable/share" />
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
-        android:paddingTop="@dimen/padding_vertical_settings"
-        android:paddingBottom="@dimen/padding_vertical_settings"
+        style="@style/SettingsTextView"
         android:text="@string/support"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_subtitle"
         app:drawableEndCompat="@drawable/support" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
-        android:paddingTop="@dimen/padding_vertical_settings"
-        android:paddingBottom="@dimen/padding_vertical_settings"
+        style="@style/SettingsTextView"
         android:text="@string/user_agreement"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_size_subtitle"
         app:drawableEndCompat="@drawable/arrow" />
 </LinearLayout>
