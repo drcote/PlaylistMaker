@@ -67,17 +67,20 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/share"
         style="@style/SettingsTextView"
         android:text="@string/share"
         app:drawableEndCompat="@drawable/share" />
 
 
     <TextView
+        android:id="@+id/support"
         style="@style/SettingsTextView"
         android:text="@string/support"
         app:drawableEndCompat="@drawable/support" />
 
     <TextView
+        android:id="@+id/user_agreement"
         style="@style/SettingsTextView"
         android:text="@string/user_agreement"
         app:drawableEndCompat="@drawable/arrow" />
