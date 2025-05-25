@@ -6,4 +6,5 @@
     <color name="settings_screen_background">#FFFFFF</color>
     <color name="switch_theme_title">#FF000000</color>
     <color name="settings_screen_title">#FF000000</color>
+    <color name="hint">#aeafb4</color>
 </resources>

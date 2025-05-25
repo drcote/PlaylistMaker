@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Playlist maker</string>
     <string name="find">Поиск</string>
+    <string name="find_hint">Поиск</string>
     <string name="media">Медиатека</string>
     <string name="settings">Настройки</string>
     <string name="dark_theme">Темная тема</string>
