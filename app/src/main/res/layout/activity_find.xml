@@ -66,8 +66,7 @@
             android:textFontWeight="400"
             android:fontFamily="@font/ys_display_regular"
             android:textColorHint="@color/hint"
-            android:textColor="@color/main_screen_text"
-            android:editable="true"/>
+            android:textColor="@color/main_screen_text" />
 
         <ImageView
             android:id="@+id/clear"

@@ -71,5 +71,5 @@ class FindActivity : AppCompatActivity() {
         } else {
             View.VISIBLE
         }
-    }
+ }
 }

@@ -5,7 +5,7 @@
         <item name="android:background">@color/main_screen_background</item>
     </style>
 
-    <style name="MainButton" parent="Widget.MaterialComponents.Button">
+    <style name="MainButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_marginBottom">@dimen/padding</item>
@@ -29,14 +29,14 @@
         <item name="android:layout_gravity">start|center_vertical</item>
         <item name="android:paddingTop">@dimen/padding_vertical_settings</item>
         <item name="android:paddingBottom">@dimen/padding_vertical_settings</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/text_size_subtitle</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
     <style name="BackFromSettings">
-        <item name="android:backgroundTint">@color/black</item>
-        <item name="iconTint">@color/white</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="iconTint">@color/black</item>
     </style>
 </resources>

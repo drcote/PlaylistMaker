@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#1a1b22</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="main_screen_background">#1A1B22</color>
+    <color name="main_screen_background">#3772e7</color>
     <color name="main_screen_text">#1A1B22</color>
-    <color name="settings_icon">#FFFFFF</color>
-    <color name="settings_screen_background">#1A1B22</color>
-    <color name="switch_theme_title">#FFFFFF</color>
-    <color name="settings_screen_title">#FFFFFFFF</color>
+    <color name="settings_icon">#AEAFB4</color>
+    <color name="settings_screen_background">#FFFFFF</color>
+    <color name="switch_theme_title">#FF000000</color>
+    <color name="settings_screen_title">#FF000000</color>
+    <color name="hint">#aeafb4</color>
 </resources>
