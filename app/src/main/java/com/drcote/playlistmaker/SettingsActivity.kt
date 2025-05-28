@@ -18,7 +18,7 @@ class SettingsActivity : AppCompatActivity() {
         val userAgreement = findViewById<TextView>(R.id.user_agreement)
 
         backButton.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         share.setOnClickListener({

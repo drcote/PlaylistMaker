@@ -1,10 +1,12 @@
 package com.drcote.playlistmaker
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -39,10 +41,13 @@ class FindActivity : AppCompatActivity() {
         editText.addTextChangedListener(simpleTextWatcher)
 
         backButton.setOnClickListener({
-            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         })
         clearButton.setOnClickListener({
             editText.setText("")
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
+            editText.clearFocus()
         })
     }
 
@@ -60,16 +65,17 @@ class FindActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val SEARCH = "SEARCH"
-        const val SEARCH_VALUE = ""
-    }
-
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
         } else {
             View.VISIBLE
         }
- }
+    }
+
+    private companion object {
+        const val SEARCH = "SEARCH"
+        const val SEARCH_VALUE = ""
+    }
 }
+

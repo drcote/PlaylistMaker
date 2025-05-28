@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/padding_vertical_settings"
         android:paddingBottom="@dimen/padding_vertical_settings">
 
         <Button
@@ -25,7 +24,7 @@
             android:minHeight="0dp"
             android:padding="0dp"
             android:stateListAnimator="@null"
-            app:icon="@drawable/back"
+            app:icon="@drawable/ic_back_arrow_24"
             app:iconPadding="0dp" />
 
         <TextView

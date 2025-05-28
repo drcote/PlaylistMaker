@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/padding_vertical_settings"
         android:paddingBottom="@dimen/padding_vertical_settings">
 
         <Button
@@ -25,7 +24,7 @@
             android:minHeight="0dp"
             android:padding="0dp"
             android:stateListAnimator="@null"
-            app:icon="@drawable/back"
+            app:icon="@drawable/ic_back_arrow_24"
             app:iconPadding="0dp" />
 
         <TextView
@@ -40,41 +39,43 @@
             android:textSize="@dimen/text_size_title" />
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:background="@drawable/search_background"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:background="@drawable/search_background">
+
+        <EditText
+            android:id="@+id/search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="42dp"
+            android:layout_marginEnd="42dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/ys_display_regular"
+            android:gravity="center_vertical"
+            android:hint="@string/find_hint"
+            android:inputType="text"
+            android:textColor="@color/main_screen_text"
+            android:textColorHint="@color/hint"
+            android:textFontWeight="400" />
 
         <ImageView
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginLeft="13dp"
-            android:src="@drawable/find"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="13dp"
+            android:src="@drawable/ic_find_16"
             app:tint="@color/hint" />
-
-        <EditText
-            android:id="@+id/search_edit_text"
-            android:layout_width="0dp"
-            android:layout_marginLeft="8dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:hint="@string/find_hint"
-            android:inputType="text"
-            android:textFontWeight="400"
-            android:fontFamily="@font/ys_display_regular"
-            android:textColorHint="@color/hint"
-            android:textColor="@color/main_screen_text" />
 
         <ImageView
             android:id="@+id/clear"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginRight="13dp"
-            android:src="@drawable/cancel"
-            app:tint="@color/hint"
-            android:visibility="gone"/>
-    </LinearLayout>
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="13dp"
+            android:src="@drawable/ic_cancel_16"
+            android:visibility="gone"
+            app:tint="@color/hint" />
+
+    </FrameLayout>
 </LinearLayout>
