@@ -9,4 +9,6 @@
     <color name="switch_theme_title">#FFFFFF</color>
     <color name="settings_screen_title">#FFFFFFFF</color>
     <color name="hint">#1a1b22</color>
+    <color name="item_track_label">#FFFFFF</color>
+    <color name="item_track_sub_label">#FFFFFF</color>
 </resources>
