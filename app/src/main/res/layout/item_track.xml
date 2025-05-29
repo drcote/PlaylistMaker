@@ -3,11 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="13dp"
     android:paddingTop="8dp"
-    android:paddingRight="13dp"
-    android:paddingBottom="8dp"
-    >
+    android:paddingBottom="8dp">
 
     <ImageView
         android:id="@+id/track_artwork"
@@ -60,33 +57,27 @@
 
             <TextView
                 android:id="@+id/track_artist"
-                android:layout_width="wrap_content"
+                style="@style/TrackInfo"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="@font/ys_display_regular"
-                android:maxLines="1"
-                android:textColor="@color/item_track_sub_label"
-                android:textFontWeight="400"
-                android:textSize="11sp" />
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/separator_dot"
+                style="@style/TrackInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/separator_dot"
-                android:textColor="@color/item_track_sub_label"
-                android:textSize="11sp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginRight="5dp"
+                android:text="@string/separator_dot" />
 
             <TextView
                 android:id="@+id/track_time"
+                style="@style/TrackInfo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ys_display_regular"
-                android:textColor="@color/item_track_sub_label"
-                android:textFontWeight="400"
-                android:textSize="11sp" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

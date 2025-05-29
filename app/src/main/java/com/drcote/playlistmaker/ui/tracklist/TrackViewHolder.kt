@@ -1,5 +1,7 @@
 package com.drcote.playlistmaker.ui.tracklist
 
+import android.content.res.Resources
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +27,14 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         Glide.with(itemView)
             .load(track.artworkUrl100)
             .placeholder(R.drawable.ic_placeholder)
-            .transform(RoundedCorners(16))
+            .transform(RoundedCorners(dpToPixel(2f)))
             .into(artworkImage)
+    }
+
+    private fun dpToPixel(dp: Float): Int {
+        val metrics: DisplayMetrics = Resources.getSystem().getDisplayMetrics()
+        val px = dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
+        return Math.round(px).toInt()
     }
 
     companion object {
