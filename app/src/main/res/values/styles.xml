@@ -39,4 +39,11 @@
         <item name="android:backgroundTint">@color/white</item>
         <item name="iconTint">@color/black</item>
     </style>
+
+    <style name="TrackInfo">
+        <item name="android:textColor">@color/item_track_sub_label</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
 </resources>

@@ -82,5 +82,5 @@
         android:id="@+id/user_agreement"
         style="@style/SettingsTextView"
         android:text="@string/user_agreement"
-        app:drawableEndCompat="@drawable/arrow" />
+        app:drawableEndCompat="@drawable/ic_arrow_8_14" />
 </LinearLayout>
