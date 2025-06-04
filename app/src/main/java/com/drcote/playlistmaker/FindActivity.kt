@@ -80,6 +80,9 @@ class FindActivity : AppCompatActivity() {
             }
         }
 
+        retryButton.setOnClickListener({
+            search(searchValue)
+        })
 
         backButton.setOnClickListener({
             finish()

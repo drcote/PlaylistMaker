@@ -20,6 +20,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val artworkImage: ImageView = itemView.findViewById(R.id.track_artwork)
 
     fun bind(track: Track) {
+        artistName.setText("")
         trackName.text = track.trackName
         artistName.text = track.artistName
         trackTime.text = track.trackTime
