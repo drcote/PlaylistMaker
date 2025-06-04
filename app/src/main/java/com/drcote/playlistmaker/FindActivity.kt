@@ -5,62 +5,55 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.drcote.playlistmaker.model.SearchResponse
 import com.drcote.playlistmaker.model.Track
+import com.drcote.playlistmaker.model.TrackApi
+import com.drcote.playlistmaker.network.ITunesApiService
 import com.drcote.playlistmaker.ui.tracklist.TrackAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class FindActivity : AppCompatActivity() {
-    val tracks = arrayListOf(
-        Track(
-            "Smells Like Teen",
-            "Nirvana",
-            "5:01",
-            "https://is5-ssl.mzstatic.com/image/thumb/Music115/v4/7b/58/c2/7b58c21a-2b51-2bb2-e59a-9bb9b96ad8c3/00602567924166.rgb.jpg/100x100bb.jpg"
-        ),
-        Track(
-            "Billie Jean",
-            "Michael Jackson",
-            "4:35",
-            "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/3d/9d/38/3d9d3811-71f0-3a0e-1ada-3004e56ff852/827969428726.jpg/100x100bb.jpg"
-        ),
-        Track(
-            "Stayin' Alive",
-            "Bee Gees",
-            "4:10",
-            "https://is4-ssl.mzstatic.com/image/thumb/Music115/v4/1f/80/1f/1f801fc1-8c0f-ea3e-d3e5-387c6619619e/16UMGIM86640.rgb.jpg/100x100bb.jpg"
-        ),
-        Track(
-            "Whole Lotta Love",
-            "Led Zeppelin",
-            "5:33",
-            "https://is2-ssl.mzstatic.com/image/thumb/Music62/v4/7e/17/e3/7e17e33f-2efa-2a36-e916-7f808576cf6b/mzm.fyigqcbs.jpg/100x100bb.jpg"
-        ),
-        Track(
-            "Sweet Child O'Mine",
-            "Guns N' Roses",
-            "5:03",
-            "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/a0/4d/c4/a04dc484-03cc-02aa-fa82-5334fcb4bc16/18UMGIM24878.rgb.jpg/100x100bb.jpg"
-        ),
-    )
+    private lateinit var retrofit: Retrofit
+    private lateinit var apiService: ITunesApiService
     private lateinit var editText: EditText
+    private lateinit var recycleView: RecyclerView
+    private lateinit var emptyPlaceholder: LinearLayout
+    private lateinit var errorPlaceholder: LinearLayout
     var searchValue: String = SEARCH_VALUE
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find)
         val backButton = findViewById<Button>(R.id.back_button)
         val clearButton = findViewById<ImageView>(R.id.clear)
-        editText = findViewById<EditText>(R.id.search_edit_text)
-        val recycleView: RecyclerView = findViewById(R.id.recycler_view)
+        emptyPlaceholder = findViewById(R.id.emptyPlaceholder)
+        errorPlaceholder = findViewById(R.id.errorPlaceholder)
+        val retryButton = findViewById<Button>(R.id.retryButton)
+        editText = findViewById(R.id.search_edit_text)
+        recycleView = findViewById(R.id.recycler_view)
         recycleView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recycleView.adapter = TrackAdapter(tracks)
 
         editText.setText(searchValue)
+
+        retrofit = Retrofit.Builder().baseUrl("https://itunes.apple.com/")
+            .addConverterFactory(GsonConverterFactory.create()).build()
+
+        apiService = retrofit.create(ITunesApiService::class.java)
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, start: Int, count: Int, after: Int) {
@@ -77,6 +70,16 @@ class FindActivity : AppCompatActivity() {
         }
 
         editText.addTextChangedListener(simpleTextWatcher)
+
+        editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                search(searchValue)
+                true
+            } else {
+                false
+            }
+        }
+
 
         backButton.setOnClickListener({
             finish()
@@ -110,6 +113,63 @@ class FindActivity : AppCompatActivity() {
         } else {
             View.VISIBLE
         }
+    }
+
+    private fun search(query: String) {
+        apiService.searchSongs(query).enqueue(object : Callback<SearchResponse> {
+            override fun onResponse(
+                call: Call<SearchResponse>, response: Response<SearchResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    val results = response.body()!!.results
+                    if (results.isEmpty()) {
+                        showEmptyPlaceholder()
+                    } else {
+                        val tracks = results.map { mapTrackApiToTrack(it) }
+                        showResults()
+                        recycleView.adapter = TrackAdapter(tracks)
+                    }
+                } else {
+                    showErrorPlaceholder()
+                }
+            }
+
+            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                showErrorPlaceholder()
+            }
+
+        })
+    }
+
+    private fun showResults() {
+        recycleView.visibility = View.VISIBLE
+        emptyPlaceholder.visibility = View.GONE
+        errorPlaceholder.visibility = View.GONE
+    }
+
+    private fun showEmptyPlaceholder() {
+        recycleView.visibility = View.GONE
+        emptyPlaceholder.visibility = View.VISIBLE
+        errorPlaceholder.visibility = View.GONE
+    }
+
+    private fun showErrorPlaceholder() {
+        recycleView.visibility = View.GONE
+        emptyPlaceholder.visibility = View.GONE
+        errorPlaceholder.visibility = View.VISIBLE
+    }
+
+    private fun formatTrackTime(millis: Long): String {
+        return SimpleDateFormat("mm:ss", Locale.getDefault()).format(millis)
+    }
+
+    private fun mapTrackApiToTrack(api: TrackApi): Track {
+        return Track(
+            trackName = api.trackName,
+            artistName = api.artistName,
+            artworkUrl100 = api.artworkUrl100,
+            trackTime = formatTrackTime(api.trackTimeMillis),
+        )
     }
 
     private companion object {
