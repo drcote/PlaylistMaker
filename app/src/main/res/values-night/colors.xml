@@ -11,4 +11,6 @@
     <color name="hint">#1a1b22</color>
     <color name="item_track_label">#FFFFFF</color>
     <color name="item_track_sub_label">#FFFFFF</color>
+    <color name="text">#FFFFFFFF</color>
+    <color name="img_color">#FFFFFFFF</color>
 </resources>
