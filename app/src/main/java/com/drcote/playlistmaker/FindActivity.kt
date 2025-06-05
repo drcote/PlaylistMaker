@@ -89,6 +89,7 @@ class FindActivity : AppCompatActivity() {
         })
         clearButton.setOnClickListener({
             editText.setText("")
+            recycleView.adapter = TrackAdapter(emptyList())
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
