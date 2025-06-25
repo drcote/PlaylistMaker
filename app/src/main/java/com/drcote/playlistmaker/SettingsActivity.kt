@@ -1,11 +1,16 @@
 package com.drcote.playlistmaker
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import com.drcote.playlistmaker.util.PrefsKeys
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +21,17 @@ class SettingsActivity : AppCompatActivity() {
         val share = findViewById<TextView>(R.id.share)
         val support = findViewById<TextView>(R.id.support)
         val userAgreement = findViewById<TextView>(R.id.user_agreement)
+        val themeSwitch = findViewById<Switch>(R.id.theme_switch)
+
+        val prefs = getSharedPreferences(PrefsKeys.SETTINGS_PREFS, Context.MODE_PRIVATE)
+        val isDarkMode = prefs.getBoolean(PrefsKeys.DARK_THEME_KEY, false)
+        themeSwitch.isChecked = isDarkMode
+        applyTheme(isDarkMode)
+
+        themeSwitch.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
+            prefs.edit().putBoolean(PrefsKeys.DARK_THEME_KEY, isChecked).apply()
+            applyTheme(isChecked)
+        }
 
         backButton.setOnClickListener {
             finish()
@@ -48,4 +64,15 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(userAgreementIntent);
         })
     }
+
+    private fun applyTheme(isDark: Boolean) {
+        AppCompatDelegate.setDefaultNightMode(
+            if (isDark) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+        )
+    }
 }
+
