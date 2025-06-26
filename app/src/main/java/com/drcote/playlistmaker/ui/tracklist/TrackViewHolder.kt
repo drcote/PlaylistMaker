@@ -13,7 +13,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.drcote.playlistmaker.R
 import com.drcote.playlistmaker.model.Track
 
-class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TrackViewHolder(itemView: View, private val onClick: (Track) -> Unit) :
+    RecyclerView.ViewHolder(itemView) {
     private val trackName: TextView = itemView.findViewById(R.id.track_name)
     private val artistName: TextView = itemView.findViewById(R.id.track_artist)
     private val trackTime: TextView = itemView.findViewById(R.id.track_time)
@@ -30,6 +31,10 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .placeholder(R.drawable.ic_placeholder)
             .transform(RoundedCorners(dpToPixel(2f)))
             .into(artworkImage)
+
+        itemView.setOnClickListener {
+            onClick(track)
+        }
     }
 
     private fun dpToPixel(dp: Float): Int {
@@ -39,10 +44,10 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     companion object {
-        fun create(parent: ViewGroup): TrackViewHolder {
+        fun create(parent: ViewGroup, onClick: (Track) -> Unit): TrackViewHolder {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_track, parent, false)
-            return TrackViewHolder(view)
+            return TrackViewHolder(view, onClick)
         }
     }
 }

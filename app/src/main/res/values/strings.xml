@@ -18,4 +18,6 @@
     <string name="network_error">Проблемы со связью</string>
     <string name="check_connection">Загрузка не удалась. Проверьте подключение к интернету</string>
     <string name="retry">Обновить</string>
+    <string name="title_searsh_results">Вы искали</string>
+    <string name="clean_history">Очистить историю</string>
 </resources>

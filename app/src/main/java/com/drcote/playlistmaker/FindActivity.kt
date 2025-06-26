@@ -19,6 +19,8 @@ import com.drcote.playlistmaker.model.Track
 import com.drcote.playlistmaker.model.TrackApi
 import com.drcote.playlistmaker.network.ITunesApiService
 import com.drcote.playlistmaker.ui.tracklist.TrackAdapter
+import com.drcote.playlistmaker.util.PrefsKeys
+import com.drcote.playlistmaker.util.SearchHistory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,8 +34,12 @@ class FindActivity : AppCompatActivity() {
     private lateinit var apiService: ITunesApiService
     private lateinit var editText: EditText
     private lateinit var recycleView: RecyclerView
+    private lateinit var recycleViewHistory: RecyclerView
     private lateinit var emptyPlaceholder: LinearLayout
     private lateinit var errorPlaceholder: LinearLayout
+    private lateinit var historyLayout: LinearLayout
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var historyAdapter: TrackAdapter
     var searchValue: String = SEARCH_VALUE
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,12 +47,32 @@ class FindActivity : AppCompatActivity() {
         setContentView(R.layout.activity_find)
         val backButton = findViewById<Button>(R.id.back_button)
         val clearButton = findViewById<ImageView>(R.id.clear)
+        val clearHistoryButton = findViewById<Button>(R.id.clear_history)
         emptyPlaceholder = findViewById(R.id.emptyPlaceholder)
         errorPlaceholder = findViewById(R.id.errorPlaceholder)
+        historyLayout = findViewById(R.id.history_layout)
         val retryButton = findViewById<Button>(R.id.retryButton)
         editText = findViewById(R.id.search_edit_text)
         recycleView = findViewById(R.id.recycler_view)
         recycleView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recycleViewHistory = findViewById(R.id.recycler_view_history)
+        recycleViewHistory.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        val prefs = getSharedPreferences(PrefsKeys.SEARCH_HISTORY_KEY, Context.MODE_PRIVATE)
+        searchHistory = SearchHistory(prefs)
+
+        historyAdapter = TrackAdapter(searchHistory.getHistory()) { track ->
+            searchHistory.addTrack(track)
+        }
+
+        recycleViewHistory.adapter = historyAdapter
+
+        searchHistory.addObserver {
+            val newHistory = searchHistory.getHistory()
+            historyAdapter.updateData(newHistory)
+            showHistoryLayout(editText.hasFocus(), editText.text.isEmpty())
+        }
 
         editText.setText(searchValue)
 
@@ -65,6 +91,7 @@ class FindActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
                 searchValue = s.toString()
+                showHistoryLayout(editText.hasFocus(), s.isNullOrEmpty())
             }
 
         }
@@ -80,6 +107,19 @@ class FindActivity : AppCompatActivity() {
             }
         }
 
+        editText.setOnFocusChangeListener { _, hasFocus ->
+            showHistoryLayout(
+                hasFocus,
+                editText.text.isEmpty()
+            )
+        }
+
+        clearHistoryButton.setOnClickListener({
+            searchHistory.clear();
+            showHistoryLayout(false, false)
+            (recycleViewHistory.adapter as? TrackAdapter)?.updateData(searchHistory.getHistory())
+        })
+
         retryButton.setOnClickListener({
             search(searchValue)
         })
@@ -89,7 +129,7 @@ class FindActivity : AppCompatActivity() {
         })
         clearButton.setOnClickListener({
             editText.setText("")
-            recycleView.adapter = TrackAdapter(emptyList())
+            recycleView.adapter = TrackAdapter(emptyList()) {}
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
@@ -131,7 +171,8 @@ class FindActivity : AppCompatActivity() {
                     } else {
                         val tracks = results.map { mapTrackApiToTrack(it) }
                         showResults()
-                        recycleView.adapter = TrackAdapter(tracks)
+                        recycleView.adapter =
+                            TrackAdapter(tracks) { track -> searchHistory.addTrack(track) }
                     }
                 } else {
                     showErrorPlaceholder()
@@ -163,16 +204,23 @@ class FindActivity : AppCompatActivity() {
         errorPlaceholder.visibility = View.VISIBLE
     }
 
+    private fun showHistoryLayout(hasFocus: Boolean, isEmpty: Boolean) {
+        val show = hasFocus && isEmpty && searchHistory.getHistory().isNotEmpty()
+        historyLayout.visibility = if (show) View.VISIBLE else View.GONE
+        recycleView.visibility = if (show) View.GONE else View.VISIBLE
+    }
+
     private fun formatTrackTime(millis: Long): String {
         return SimpleDateFormat("mm:ss", Locale.getDefault()).format(millis)
     }
 
     private fun mapTrackApiToTrack(api: TrackApi): Track {
         return Track(
-            trackName = api.trackName,
-            artistName = api.artistName,
-            artworkUrl100 = api.artworkUrl100,
-            trackTime = formatTrackTime(api.trackTimeMillis),
+            trackName = api.trackName ?: "",
+            artistName = api.artistName ?: "",
+            artworkUrl100 = api.artworkUrl100 ?: "",
+            trackTime = formatTrackTime(api.trackTimeMillis ?: 0),
+            trackId = api.trackId ?: 0
         )
     }
 
