@@ -20,4 +20,9 @@
     <string name="retry">Обновить</string>
     <string name="title_searsh_results">Вы искали</string>
     <string name="clean_history">Очистить историю</string>
+    <string name="duration_label">Длительность</string>
+    <string name="album_label">Альбом</string>
+    <string name="year_label">Год</string>
+    <string name="genre_label">Жанр</string>
+    <string name="country_label">Страна</string>
 </resources>

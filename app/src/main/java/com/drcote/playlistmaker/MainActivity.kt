@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.drcote.playlistmaker.util.PrefsKeys
@@ -25,7 +23,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         mediaButton.setOnClickListener {
-            startActivity(Intent(this, MediaActivity::class.java))
+            //startActivity(Intent(this, MediaActivity::class.java))
+            startActivity(Intent(this, AudioPlayerActivity::class.java))
         }
 
         settingsButton.setOnClickListener {

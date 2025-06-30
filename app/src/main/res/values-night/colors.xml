@@ -13,4 +13,7 @@
     <color name="item_track_sub_label">#FFFFFF</color>
     <color name="text">#FFFFFFFF</color>
     <color name="img_color">#FFFFFFFF</color>
+    <color name="img_color_inv">#1A1B22</color>
+    <color name="label_track_table">#AEAFB4</color>
+    <color name="round">#424247</color>
 </resources>

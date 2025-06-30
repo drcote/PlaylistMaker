@@ -1,7 +1,5 @@
 package com.drcote.playlistmaker.ui.tracklist
 
-import android.content.res.Resources
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.drcote.playlistmaker.R
 import com.drcote.playlistmaker.model.Track
+import com.drcote.playlistmaker.util.dpToPixel
 
 class TrackViewHolder(itemView: View, private val onClick: (Track) -> Unit) :
     RecyclerView.ViewHolder(itemView) {
@@ -35,12 +34,6 @@ class TrackViewHolder(itemView: View, private val onClick: (Track) -> Unit) :
         itemView.setOnClickListener {
             onClick(track)
         }
-    }
-
-    private fun dpToPixel(dp: Float): Int {
-        val metrics: DisplayMetrics = Resources.getSystem().getDisplayMetrics()
-        val px = dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
-        return Math.round(px).toInt()
     }
 
     companion object {
