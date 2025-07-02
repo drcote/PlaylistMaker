@@ -70,8 +70,8 @@
 
     <ImageButton
         android:id="@+id/add_to_album_button"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
+        android:layout_width="@dimen/audio_player_button_size"
+        android:layout_height="@dimen/audio_player_button_size"
         android:background="@drawable/round_button"
         android:src="@drawable/ic_add_media_23"
         app:layout_constraintBottom_toBottomOf="@id/play_button"
@@ -93,8 +93,8 @@
 
     <ImageButton
         android:id="@+id/add_favorite_button"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
+        android:layout_width="@dimen/audio_player_button_size"
+        android:layout_height="@dimen/audio_player_button_size"
         android:background="@drawable/round_button"
         android:src="@drawable/ic_add_faivorite_25_23"
         app:layout_constraintBottom_toBottomOf="@id/play_button"
@@ -137,7 +137,7 @@
         style="@style/TextTrackLabelTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_vertical_audio_player_table"
         android:text="@string/album_label"
         app:layout_constraintStart_toEndOf="@id/left_border"
         app:layout_constraintTop_toBottomOf="@id/duration_label" />
@@ -161,7 +161,7 @@
         style="@style/TextTrackLabelTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_vertical_audio_player_table"
         android:text="@string/year_label"
         app:layout_constraintStart_toEndOf="@id/left_border"
         app:layout_constraintTop_toBottomOf="@id/album_label" />
@@ -180,7 +180,7 @@
         style="@style/TextTrackLabelTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_vertical_audio_player_table"
         android:text="@string/genre_label"
         app:layout_constraintStart_toEndOf="@id/left_border"
         app:layout_constraintTop_toBottomOf="@id/year_label" />
@@ -199,7 +199,7 @@
         style="@style/TextTrackLabelTable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_vertical_audio_player_table"
         android:text="@string/country_label"
         app:layout_constraintStart_toEndOf="@id/left_border"
         app:layout_constraintTop_toBottomOf="@id/genre_label" />

@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         mediaButton.setOnClickListener {
-            //startActivity(Intent(this, MediaActivity::class.java))
             startActivity(Intent(this, AudioPlayerActivity::class.java))
         }
 
