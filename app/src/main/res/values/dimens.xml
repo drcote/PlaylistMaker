@@ -3,8 +3,12 @@
     <dimen name="text_size_primary">22sp</dimen>
     <dimen name="text_size_title">26sp</dimen>
     <dimen name="text_size_subtitle">16sp</dimen>
+    <dimen name="text_size_secondary">14sp</dimen>
+    <dimen name="text_track_table">13sp</dimen>
     <dimen name="padding">16dp</dimen>
     <dimen name="padding_vertical_settings">21dp</dimen>
     <dimen name="main_menu_button_radius">16dp</dimen>
     <dimen name="main_menu_padding_pic_text">8dp</dimen>
+    <dimen name="audio_player_button_size">51dp</dimen>
+    <dimen name="margin_vertical_audio_player_table">16dp</dimen>
 </resources>

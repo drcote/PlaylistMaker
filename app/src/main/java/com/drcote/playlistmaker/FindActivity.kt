@@ -1,6 +1,7 @@
 package com.drcote.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -64,6 +65,9 @@ class FindActivity : AppCompatActivity() {
 
         historyAdapter = TrackAdapter(searchHistory.getHistory()) { track ->
             searchHistory.addTrack(track)
+            val intent = Intent(this@FindActivity, AudioPlayerActivity::class.java)
+            intent.putExtra(AudioPlayerActivity.EXTRA_TRACK, track)
+            startActivity(intent)
         }
 
         recycleViewHistory.adapter = historyAdapter
@@ -172,7 +176,13 @@ class FindActivity : AppCompatActivity() {
                         val tracks = results.map { mapTrackApiToTrack(it) }
                         showResults()
                         recycleView.adapter =
-                            TrackAdapter(tracks) { track -> searchHistory.addTrack(track) }
+                            TrackAdapter(tracks) { track ->
+                                searchHistory.addTrack(track)
+                                val intent =
+                                    Intent(this@FindActivity, AudioPlayerActivity::class.java)
+                                intent.putExtra(AudioPlayerActivity.EXTRA_TRACK, track)
+                                startActivity(intent)
+                            }
                     }
                 } else {
                     showErrorPlaceholder()
@@ -220,7 +230,11 @@ class FindActivity : AppCompatActivity() {
             artistName = api.artistName ?: "",
             artworkUrl100 = api.artworkUrl100 ?: "",
             trackTime = formatTrackTime(api.trackTimeMillis ?: 0),
-            trackId = api.trackId ?: 0
+            trackId = api.trackId ?: 0,
+            primaryGenreName = api.primaryGenreName ?: "",
+            collectionName = api.collectionName ?: "",
+            releaseDate = api.releaseDate ?: "",
+            country = api.country ?: ""
         )
     }
 
