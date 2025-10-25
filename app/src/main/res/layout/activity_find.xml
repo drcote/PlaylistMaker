@@ -81,11 +81,19 @@
 
     </FrameLayout>
 
+    <ProgressBar
+        android:id="@+id/search_progress"
+        style="@style/ProgressBar"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/progress_bar"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/emptyPlaceholder"
@@ -143,35 +151,37 @@
             android:layout_marginTop="24dp"
             android:text="@string/retry" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/history_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
+
         <TextView
+            style="@style/TextSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_searsh_results"
             android:layout_gravity="center"
-            style="@style/TextSettings"
-            android:textFontWeight="500"
             android:layout_marginTop="42dp"
-            />
+            android:text="@string/title_searsh_results"
+            android:textFontWeight="500" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_history"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginTop="24dp"
-            />
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/clear_history"
+            style="@style/RetryButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/clean_history"
-            style="@style/RetryButton"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="24dp"
+            android:text="@string/clean_history" />
     </LinearLayout>
 </LinearLayout>
