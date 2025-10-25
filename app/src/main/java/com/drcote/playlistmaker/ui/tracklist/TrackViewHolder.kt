@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.drcote.playlistmaker.R
 import com.drcote.playlistmaker.model.Track
+import com.drcote.playlistmaker.util.ClickDebouncer
 import com.drcote.playlistmaker.util.dpToPixel
 
 class TrackViewHolder(itemView: View, private val onClick: (Track) -> Unit) :
@@ -32,7 +33,7 @@ class TrackViewHolder(itemView: View, private val onClick: (Track) -> Unit) :
             .into(artworkImage)
 
         itemView.setOnClickListener {
-            onClick(track)
+            if (ClickDebouncer.tryClick()) onClick(track)
         }
     }
 

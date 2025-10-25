@@ -3,6 +3,8 @@ package com.drcote.playlistmaker
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -12,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +38,7 @@ class FindActivity : AppCompatActivity() {
     private lateinit var apiService: ITunesApiService
     private lateinit var editText: EditText
     private lateinit var recycleView: RecyclerView
+    private lateinit var progressBar: ProgressBar
     private lateinit var recycleViewHistory: RecyclerView
     private lateinit var emptyPlaceholder: LinearLayout
     private lateinit var errorPlaceholder: LinearLayout
@@ -42,6 +46,10 @@ class FindActivity : AppCompatActivity() {
     private lateinit var searchHistory: SearchHistory
     private lateinit var historyAdapter: TrackAdapter
     var searchValue: String = SEARCH_VALUE
+    private val debounceHandler = Handler(Looper.getMainLooper())
+    private val SEARCH_DEBOUNCE_DELAY = 2000L
+    private var searchRunnable: Runnable? = null
+    private var currentCall: Call<SearchResponse>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +63,7 @@ class FindActivity : AppCompatActivity() {
         val retryButton = findViewById<Button>(R.id.retryButton)
         editText = findViewById(R.id.search_edit_text)
         recycleView = findViewById(R.id.recycler_view)
+        progressBar = findViewById(R.id.search_progress)
         recycleView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recycleViewHistory = findViewById(R.id.recycler_view_history)
         recycleViewHistory.layoutManager =
@@ -96,6 +105,7 @@ class FindActivity : AppCompatActivity() {
                 clearButton.visibility = clearButtonVisibility(s)
                 searchValue = s.toString()
                 showHistoryLayout(editText.hasFocus(), s.isNullOrEmpty())
+                scheduleDebouncedSearch()
             }
 
         }
@@ -104,7 +114,7 @@ class FindActivity : AppCompatActivity() {
 
         editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                search(searchValue)
+                performSearchNow()
                 true
             } else {
                 false
@@ -125,7 +135,7 @@ class FindActivity : AppCompatActivity() {
         })
 
         retryButton.setOnClickListener({
-            search(searchValue)
+            performSearchNow()
         })
 
         backButton.setOnClickListener({
@@ -139,6 +149,24 @@ class FindActivity : AppCompatActivity() {
             inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
             editText.clearFocus()
         })
+    }
+
+    private fun setLoading(loading: Boolean) {
+        progressBar.visibility = if (loading) View.VISIBLE else View.GONE
+        recycleView.visibility = if (loading) View.GONE else View.VISIBLE
+        emptyPlaceholder.visibility = View.GONE
+        errorPlaceholder.visibility = View.GONE
+    }
+
+    private fun performSearchNow() {
+        debounceHandler.removeCallbacksAndMessages(null)
+        search(searchValue)
+    }
+
+    private fun scheduleDebouncedSearch() {
+        searchRunnable?.let { debounceHandler.removeCallbacks(it) }
+        searchRunnable = Runnable { search(searchValue) }
+        debounceHandler.postDelayed(searchRunnable!!, SEARCH_DEBOUNCE_DELAY)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -164,17 +192,21 @@ class FindActivity : AppCompatActivity() {
     }
 
     private fun search(query: String) {
-        apiService.searchSongs(query).enqueue(object : Callback<SearchResponse> {
+        if (query.isBlank()) return
+        currentCall?.cancel()
+        setLoading(true)
+        currentCall = apiService.searchSongs(query)
+        currentCall!!.enqueue(object : Callback<SearchResponse> {
             override fun onResponse(
                 call: Call<SearchResponse>, response: Response<SearchResponse>
             ) {
                 if (response.isSuccessful && response.body() != null) {
                     val results = response.body()!!.results
                     if (results.isEmpty()) {
-                        showEmptyPlaceholder()
+                        setLoading(false); showEmptyPlaceholder()
                     } else {
                         val tracks = results.map { mapTrackApiToTrack(it) }
-                        showResults()
+                        setLoading(false); showResults()
                         recycleView.adapter =
                             TrackAdapter(tracks) { track ->
                                 searchHistory.addTrack(track)
@@ -185,12 +217,13 @@ class FindActivity : AppCompatActivity() {
                             }
                     }
                 } else {
-                    showErrorPlaceholder()
+                    setLoading(false); showErrorPlaceholder()
                 }
             }
 
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-                showErrorPlaceholder()
+                if (call.isCanceled) return
+                setLoading(false); showErrorPlaceholder()
             }
 
         })
@@ -234,7 +267,8 @@ class FindActivity : AppCompatActivity() {
             primaryGenreName = api.primaryGenreName ?: "",
             collectionName = api.collectionName ?: "",
             releaseDate = api.releaseDate ?: "",
-            country = api.country ?: ""
+            country = api.country ?: "",
+            previewUrl = api.previewUrl ?: ""
         )
     }
 
